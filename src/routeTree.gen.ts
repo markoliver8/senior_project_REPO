@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MatrixRouteImport } from './routes/matrix'
+import { Route as TrainCategoryRouteImport } from './routes/train.$category'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MatrixRoute = MatrixRouteImport.update({
+  id: '/matrix',
+  path: '/matrix',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrainCategoryRoute = TrainCategoryRouteImport.update({
+  id: '/train/$category',
+  path: '/train/$category',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/matrix': typeof MatrixRoute
+  '/train/$category': typeof TrainCategoryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/matrix': typeof MatrixRoute
+  '/train/$category': typeof TrainCategoryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/matrix': typeof MatrixRoute
+  '/train/$category': typeof TrainCategoryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/matrix' | '/train/$category'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/matrix' | '/train/$category'
+  id: '__root__' | '/' | '/matrix' | '/train/$category'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MatrixRoute: typeof MatrixRoute
+  TrainCategoryRoute: typeof TrainCategoryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/matrix': {
+      id: '/matrix'
+      path: '/matrix'
+      fullPath: '/matrix'
+      preLoaderRoute: typeof MatrixRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/train/$category': {
+      id: '/train/$category'
+      path: '/train/$category'
+      fullPath: '/train/$category'
+      preLoaderRoute: typeof TrainCategoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MatrixRoute: MatrixRoute,
+  TrainCategoryRoute: TrainCategoryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
