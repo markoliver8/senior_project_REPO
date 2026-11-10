@@ -31,15 +31,10 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
   useEffect(() => { if (ready) localStorage.setItem(KEY, JSON.stringify(progress)); }, [progress, ready]);
 
   const record: Ctx["record"] = useCallback((r) => {
-    let full!: ScenarioResult;
-    setProgress((p) => {
-      const { next, tierChange } = applyOutcome(p.categories[r.category], r.passed, r.score);
-      full = { ...r, tierChange, competencyAfter: next.competency, at: Date.now() };
-      return { categories: { ...p.categories, [r.category]: next }, history: [full, ...p.history].slice(0, 100) };
-    });
-    // compute synchronously for the caller too
     const { next, tierChange } = applyOutcome(progress.categories[r.category], r.passed, r.score);
-    return full ?? { ...r, tierChange, competencyAfter: next.competency, at: Date.now() };
+    const full: ScenarioResult = { ...r, tierChange, competencyAfter: next.competency, at: Date.now() };
+    setProgress((p) => ({ categories: { ...p.categories, [r.category]: next }, history: [full, ...p.history].slice(0, 100) }));
+    return full;
   }, [progress]);
 
   const reset = useCallback(() => setProgress(fresh()), []);
