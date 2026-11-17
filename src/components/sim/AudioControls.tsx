@@ -12,7 +12,7 @@ export function AudioControls({ playing, onPlay, onPause, onReplay, volume, setV
         : <Button size="icon" variant="secondary" aria-label="Play audio" onClick={onPlay}><Play /></Button>}
       <Button size="icon" variant="ghost" aria-label="Replay line" onClick={onReplay}><RotateCcw /></Button>
       <Button size="icon" variant="ghost" aria-label={volume ? "Mute" : "Unmute"} onClick={() => setVolume(volume ? 0 : 1)}>{volume ? <Volume2 /> : <VolumeX />}</Button>
-      <Slider className="w-24" value={[volume * 100]} max={100} step={5} onValueChange={(v) => setVolume(v[0] / 100)} aria-label="Volume" />
+      <Slider className="w-24" value={[volume * 100]} max={100} step={5} onValueChange={(v) => setVolume((v[0] ?? 0) / 100)} aria-label="Volume" />
     </div>
   );
 }

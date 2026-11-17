@@ -36,7 +36,7 @@ export function SmsPhone({ sms, api, onAction }: { sms: SmsContent; api: FlagApi
                 className="mt-10 w-[88%] animate-in slide-in-from-top-4 fade-in rounded-2xl bg-card/90 p-3 text-left shadow-lg backdrop-blur">
                 <div className="flex items-center gap-2 text-xs text-muted-foreground"><MessageSquare className="size-4 text-success" /> MESSAGES · now</div>
                 <div className="mt-1 text-sm font-semibold">{sms.sender}</div>
-                <div className="line-clamp-2 text-sm">{sms.messages[0].map((s) => s.text).join("")}</div>
+                <div className="line-clamp-2 text-sm">{(sms.messages[0] ?? []).map((s) => s.text).join("")}</div>
               </button>
             )}
             {notif && <p className="mt-4 text-xs text-muted-foreground">Tap the notification to open</p>}

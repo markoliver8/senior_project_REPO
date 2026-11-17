@@ -13,12 +13,12 @@ const fmt = (s: number) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${Str
 export function CallScreen({ call, api, onAction }: { call: CallContent; api: FlagApi; onAction: (a: Action) => void }) {
   const [state, setState] = useState<"ringing" | "active">("ringing");
   const [nodeId, setNodeId] = useState(call.start);
-  const [transcript, setTranscript] = useState<{ who: "caller" | "you"; text: string; ioc?: string; key: string }[]>([]);
+  const [transcript, setTranscript] = useState<{ who: "caller" | "you"; text: string; ioc?: string | undefined; key: string }[]>([]);
   const [secs, setSecs] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
   const volRef = useRef(volume); volRef.current = volume;
-  const node = call.nodes[nodeId];
+  const node = call.nodes[nodeId]!;
 
   useEffect(() => () => stopSpeech(), []);
   useEffect(() => {

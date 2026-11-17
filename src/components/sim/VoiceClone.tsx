@@ -19,7 +19,7 @@ export function VoiceClone({ vc, api, onAction }: { vc: VoiceCloneContent; api: 
     if (i >= vc.lines.length) { setPlaying(false); return; }
     cancelled.current = false;
     setLine(i); setPlaying(true);
-    speak(vc.lines[i].text, { ...vc.voice, volume: volRef.current }, () => { if (!cancelled.current) playFrom(i + 1); });
+    speak(vc.lines[i]!.text, { ...vc.voice, volume: volRef.current }, () => { if (!cancelled.current) playFrom(i + 1); });
   };
 
   return (

@@ -11,7 +11,7 @@ type Field = keyof EmailContent["headers"]["iocs"];
 
 export function HeaderDrawer({ open, onOpenChange, email, api }: { open: boolean; onOpenChange: (o: boolean) => void; email: EmailContent; api: FlagApi }) {
   const h = email.headers;
-  const fromDomain = email.from.address.split("@")[1];
+  const fromDomain = email.from.address.split("@")[1] ?? "";
   const rows: { field: Field; label: string; value: string; status?: AuthResult; bad: boolean }[] = [
     { field: "spf", label: "SPF", value: `${h.spf} (sender IP ${h.originIp})`, status: h.spf, bad: h.spf !== "pass" },
     { field: "dkim", label: "DKIM", value: `${h.dkim} (d=${fromDomain})`, status: h.dkim, bad: h.dkim !== "pass" },

@@ -52,7 +52,7 @@ export function DeepfakePlayer({ df, api, onAction }: { df: DeepfakeContent; api
     if (!api.flagged.has(key)) api.toggle(key);
   };
   const removeMarker = (i: number) => {
-    const m = markers[i];
+    const m = markers[i]!;
     const rest = markers.filter((_, j) => j !== i);
     setMarkers(rest);
     if (!rest.some((r) => r.key === m.key) && api.flagged.has(m.key)) api.toggle(m.key);
